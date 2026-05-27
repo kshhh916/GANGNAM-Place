@@ -1196,6 +1196,7 @@ footer {
     backdrop-filter: blur(5px);
     align-items: center;
     justify-content: center;
+    padding: 20px; /* Add padding to prevent edge touching */
 }
 .portfolio-modal.show {
     display: flex;
@@ -1204,11 +1205,13 @@ footer {
     background-color: #fff;
     padding: 60px 40px 40px;
     border-radius: 20px;
-    width: 90%;
+    width: 100%;
     max-width: 800px;
     position: relative;
     animation: modalFadeIn 0.4s ease-out;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-height: 85vh; /* Prevent it from being taller than screen */
+    overflow-y: auto; /* Make content scrollable inside */
 }
 @keyframes modalFadeIn {
     from {opacity: 0; transform: translateY(-20px);}
