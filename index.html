@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gangnam Hidden Place | 강남의 숨겨진 보물들</title>
+    <meta name="description" content="역삼부터 청담까지, 강남구 핵심 6개 동의 숨겨진 카페, 식당, 놀거리를 소개합니다.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Intro Modal -->
+    <div id="introModal" class="intro-modal">
+        <div class="intro-modal-content">
+            <div class="intro-icon">GHP</div>
+            <h2>Welcome to Gangnam Hidden Place</h2>
+            <p>본 웹사이트는 강남구 핵심 상권의 숨겨진 보물 같은 장소들을 큐레이션한 포트폴리오입니다.<br><br>세련된 공간과 미식의 여정을 시작하시겠습니까?</p>
+            <button id="introConfirmBtn" class="intro-btn">확인</button>
+            <div class="intro-footer">GANGNAM HIDDEN PLACE | PORTFOLIO</div>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">GANGNAM HIDDEN PLACE</a></div>
+        <div class="header-right">
+            <nav class="top-nav-links">
+                <a href="index.html">Home</a>
+                <a href="portfolio.html">포트폴리오</a>
+                <a href="board.html">게시판</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <div class="side-logo">GANGNAM<br>HIDDEN PLACE</div>
+            <span class="close-btn" id="closeBtn">&times;</span>
+        </div>
+        <nav class="side-nav-links">
+            <a href="#yeoksam" data-dong="yeoksam">01 역삼동</a>
+            <a href="#nonhyeon" data-dong="nonhyeon">02 논현동</a>
+            <a href="#sinsa" data-dong="sinsa">03 신사동</a>
+            <a href="#samseong" data-dong="samseong">04 삼성동</a>
+            <a href="#apgujeong" data-dong="apgujeong">05 압구정동</a>
+            <a href="#cheongdam" data-dong="cheongdam">06 청담동</a>
+        </nav>
+    </div>
+
+    <main>
+        <section class="hero">
+            <div class="hero-inner">
+                <span class="tagline reveal">EST. 2026 / GANGNAM CURATION</span>
+                <h1 class="reveal">The Hidden <em>Soul</em><br>of Gangnam</h1>
+                <p class="reveal">빌딩 숲 사이, 우리가 미처 몰랐던 6개 동의 감도 높은 공간들.<br>진정한 강남의 정취를 발견하는 미식과 문화의 여정.</p>
+                <div class="scroll-hint reveal">
+                    <span>EXPLORE DOWNTOWN</span>
+                    <div class="mouse"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 01 역삼동 -->
+        <section id="yeoksam">
+            <div class="sidebar">
+                <span class="dong-number">01</span>
+                <h2>역삼동</h2>
+            </div>
+            <div class="content-grid">
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="upper_and_under.jpg" alt="Upper and Under">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Dessert</span>
+                        <h3>어퍼앤언더</h3>
+                        <p>달콤한 디저트와 진한 커피의 만남. 감각적인 인테리어의 디저트 성지.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="something_about_coffee.jpg" alt="Something About Coffee">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Dessert</span>
+                        <h3>썸띵어바웃커피</h3>
+                        <p>과일 가득한 타르트와 친절한 서비스가 돋보이는 힐링 공간.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="deopbap_jjageuri.jpg" alt="1992 Deopbap">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Restaurant</span>
+                        <h3>1992 덮밥&짜글이 강남본점</h3>
+                        <p>전라도 방식의 깊은 맛. 강남역 근처에서 즐기는 든든한 한 끼 식사.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="kiun_meat.jpg" alt="Kiun Gangnam">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>기운 강남역 본점</h3>
+                        <p>최상의 육질을 자랑하는 프리미엄 고기 요리 전문점.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="slab_study_cafe.png" alt="Study Cafe">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Activity</span>
+                        <h3>에스랩 스터디카페 강남 3호점</h3>
+                        <p>카페처럼 쾌적한 작업 환경과 프리미엄 커피 서비스를 동시에.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02 논현동 -->
+        <section id="nonhyeon" class="sec-nonhyeon">
+            <div class="sidebar">
+                <span class="dong-number">02</span>
+                <h2>논현동</h2>
+            </div>
+            <div class="content-grid">
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="book_cafe_leben.jpg" alt="Book Cafe Leben">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Culture</span>
+                        <h3>북카페레벤</h3>
+                        <p>책과 커피가 함께하는 아늑한 서재형 카페. 사색과 독서를 위한 완벽한 공간.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="matt_cafe.png" alt="Matt Cafe">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe</span>
+                        <h3>맷카페 논현</h3>
+                        <p>세련된 인테리어와 감각적인 조명이 돋보이는 공간. 깊은 풍미의 커피를 즐겨보세요.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="bespokeat_casa.jpg" alt="Bespokeat Casa">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>비스포킷 까사</h3>
+                        <p>정성 가득한 피자와 파스타를 즐길 수 있는 비스트로. 특별한 날을 위한 모임 장소 추천.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="sanhocho.png" alt="Sanhocho">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>산호초 논현</h3>
+                        <p>신선한 제철 해산물을 만날 수 있는 곳. 바다의 풍미를 그대로 담은 정갈한 상차림.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="lp_bar_beatles.jpg" alt="LP Bar Beatles">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Activity / Bar</span>
+                        <h3>LP바 비틀즈 논현</h3>
+                        <p>아날로그 감성이 가득한 공간. 수많은 LP판과 함께 추억의 음악에 젖어보세요.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 신사동 -->
+        <section id="sinsa" class="sec-sinsa">
+            <div class="sidebar">
+                <span class="dong-number">03</span>
+                <h2>신사동</h2>
+            </div>
+            <div class="content-grid">
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="cafe_yeonmujang.jpg" alt="Cafe Yeonmujang">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe</span>
+                        <h3>카페 연무장 신사</h3>
+                        <p>탁 트인 뷰와 감각적인 인테리어가 돋보이는 카페. 통창 너머로 보이는 도심 전경이 일품입니다.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="muru.jpg" alt="Muru">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Space</span>
+                        <h3>무루 신사</h3>
+                        <p>도심 속 작은 정원 같은 아늑한 공간. 편안한 분위기에서 즐기는 휴식 시간.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="sinsa_gopchang.jpg" alt="Sinsa So-Gopchang">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>신사소곱창 신사본점</h3>
+                        <p>고소한 곱이 가득한 소곱창 맛집. 줄 서서 먹는 신사역 인근의 대표 먹거리.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="tiello.jpg" alt="Tiello">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining / Bar</span>
+                        <h3>띠엘로</h3>
+                        <p>고급스러운 분위기에서 즐기는 이탈리안 요리와 와인. 소중한 사람과의 특별한 만남을 위해.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="milano_boy.jpg" alt="Milano Boy">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Shopping</span>
+                        <h3>밀라노보이</h3>
+                        <p>엄선된 명품 컬렉션을 만나볼 수 있는 프리미엄 편집샵. 유니크한 패션 아이템의 성지.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04 삼성동 -->
+        <section id="samseong" class="sec-samseong">
+            <div class="sidebar">
+                <span class="dong-number">04</span>
+                <h2>삼성동</h2>
+            </div>
+            <div class="content-grid">
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="answer_seoul.jpg" alt="Answer Seoul">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>앤써 서울 삼성</h3>
+                        <p>감각적인 화이트 톤 인테리어가 돋보이는 삼성동의 핫플레이스.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="epi.jpg" alt="Epi Bakery">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Bakery</span>
+                        <h3>에삐 선릉본점</h3>
+                        <p>따뜻한 분위기에서 즐기는 매일 갓 구워낸 신선한 베이커리와 커피.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="sotnaeum.jpg" alt="Sotnaeum">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>솥내음 삼성점</h3>
+                        <p>정갈하고 푸짐한 토핑이 올라간 프리미엄 솥밥 전문점.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="mortons.jpg" alt="Morton's The Steakhouse">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>몰튼스 더 스테이크하우스</h3>
+                        <p>특별한 날을 완성하는 최상급 스테이크와 와인 페어링.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="bongeunsa.png" alt="Bongeunsa Temple">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Culture / Activity</span>
+                        <h3>봉은사 산책 및 사찰 체험</h3>
+                        <p>빌딩 숲 사이, 천년 고찰에서 만나는 평온한 휴식과 사찰 체험.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 05 압구정동 -->
+        <section id="apgujeong" class="sec-apgujeong">
+            <div class="sidebar">
+                <span class="dong-number">05</span>
+                <h2>압구정동</h2>
+            </div>
+            <div class="content-grid">
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="notbadcoffee.jpg" alt="Not Bad Coffee Dosan">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Space</span>
+                        <h3>낫배드커피 도산</h3>
+                        <p>감각적인 테라스와 계단식 좌석이 매력적인 도산공원 인근의 커피 스팟.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="twnty.jpg" alt="twnty">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Dessert</span>
+                        <h3>twnty</h3>
+                        <p>이국적인 휴양지 느낌의 인테리어 속에서 즐기는 여유로운 디저트 타임.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="fugetsu.jpg" alt="Tsuruhashi Fugetsu">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>쯔루하시 후게츠 도산</h3>
+                        <p>눈앞에서 철판에 직접 구워주는 오사카 정통 오코노미야키의 맛.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="kkapom.jpg" alt="Kkapom">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>까폼 압구정</h3>
+                        <p>현지의 맛을 그대로 재현한 태국 음식 전문점. 깊고 진한 맛의 쌀국수 추천.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="rodeo_walk.png" alt="Apgujeong Rodeo Walk">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Culture / Activity</span>
+                        <h3>압구정 로데오 뒷골목 산책 및 구경</h3>
+                        <p>트렌디한 샵들과 감성적인 조명이 어우러진 압구정의 밤거리 산책.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 06 청담동 -->
+        <section id="cheongdam">
+            <div class="sidebar">
+                <span class="dong-number">06</span>
+                <h2>청담동</h2>
+            </div>
+            <div class="content-grid">
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="coffee_lusso.jpg" alt="Coffee Lusso">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Space</span>
+                        <h3>커피루소 청담</h3>
+                        <p>자연 채광이 스며드는 이국적인 테라스에서 즐기는 스페셜티 커피.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="suede_bakery.jpg" alt="Suede Bakery">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Cafe / Dessert</span>
+                        <h3>스웨이드 베이커리</h3>
+                        <p>다양한 종류의 화려하고 귀여운 파티용 케이크가 가득한 디저트 샵.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="people_the_terrace.jpg" alt="People The Terrace">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining / Bar</span>
+                        <h3>피플더테라스</h3>
+                        <p>분위기 있는 테라스에서 샴페인과 함께하는 근사한 다이닝 바.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="munbo_hotpot.jpg" alt="Munbo Hotpot">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Dining</span>
+                        <h3>문보 핫팟</h3>
+                        <p>최상급 소고기와 신선한 식재료로 즐기는 프리미엄 훠궈.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+                <div class="card reveal">
+                    <div class="card-img-wrapper">
+                        <img src="cheongdam_art.png" alt="Cheongdam Art Museum">
+                    </div>
+                    <div class="card-info">
+                        <span class="category-tag">Culture / Activity</span>
+                        <h3>청담 미술관 및 팝업 전시</h3>
+                        <p>청담동 거리 곳곳에 숨겨진 프라이빗한 갤러리와 팝업 전시 관람.</p>
+                        <a href="#" class="read-more">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2 class="footer-logo">Home</h2>
+            </div>
+            <div class="footer-section">
+                <h3>Menu</h3>
+                <ul>
+                    <li><a href="portfolio.html">포트폴리오</a></li>
+                    <li><a href="board.html">게시판</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h3>Contact</h3>
+                <p>Phone: <a href="tel:01063781081">010 6378 1081</a></p>
+                <p>Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kimseunghyun0916@gmail.com" target="_blank">kimseunghyun0916@gmail.com</a></p>
+                <p>Instagram: <a href="https://www.instagram.com/k_sxhx.4" target="_blank">@k_sxhx.4</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gangnam Hidden Place. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="scroll-controls">
+        <button id="scrollTop" title="Go to Top">↑</button>
+        <button id="scrollBottom" title="Go to Bottom">↓</button>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const h3 = card.querySelector('h3');
+                const link = card.querySelector('.read-more');
+                if (h3 && link && link.textContent === '자세히 보기') {
+                    let name = h3.textContent.trim();
+                    if (name.includes('봉은사')) name = '봉은사';
+                    if (name.includes('로데오')) name = '압구정로데오거리';
+                    if (name.includes('청담 미술관')) name = '청담동';
+                    if (name === 'Matt Cafe') name = '매트카페';
+                    // 네이버 지도 장소 검색 링크 (최신 v5 호환, 길찾기 버튼 클릭 가능)
+                    link.href = `https://map.naver.com/p/search/${encodeURIComponent(name)}`;
+                    link.target = '_blank';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

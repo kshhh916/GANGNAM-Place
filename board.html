@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook | 강남의 숨겨진 보물들</title>
+    <meta name="description" content="강남 숨겨진 핫플레이스 방문자들을 위한 방명록입니다.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">GANGNAM HIDDEN PLACE</a></div>
+        <div class="header-right">
+            <nav class="top-nav-links">
+                <a href="index.html">Home</a>
+                <a href="portfolio.html">포트폴리오</a>
+                <a href="board.html">게시판</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <div class="side-logo">GANGNAM<br>HIDDEN PLACE</div>
+            <span class="close-btn" id="closeBtn">&times;</span>
+        </div>
+        <nav class="side-nav-links">
+            <a href="index.html#yeoksam">01 역삼동</a>
+            <a href="index.html#nonhyeon">02 논현동</a>
+            <a href="index.html#sinsa">03 신사동</a>
+            <a href="index.html#samseong">04 삼성동</a>
+            <a href="index.html#apgujeong">05 압구정동</a>
+            <a href="index.html#cheongdam">06 청담동</a>
+        </nav>
+    </div>
+
+    <main class="page-board">
+        <a href="index.html" class="back-home-btn">홈으로 돌아가기</a>
+        <section class="board-header">
+            <div class="board-header-inner">
+                <span class="tagline reveal">GUESTBOOK</span>
+                <h1 class="reveal">커뮤니티 로그</h1>
+                <p class="reveal">방문자들과 소통하고 강남의 숨겨진 매력을 공유하는 공간입니다.</p>
+            </div>
+        </section>
+
+        <section class="board-content reveal">
+            <div class="board-top-bar">
+                <div class="board-title-area">
+                    <h2>게시글 목록 <span class="post-count" id="boardCount">0</span></h2>
+                </div>
+                <div>
+                    <button id="adminModeBtn" class="write-btn" style="background-color: #555; margin-right: 10px;">관리자 모드</button>
+                    <button id="toggleWriteBtn" class="write-btn">+ 새로운 글 작성</button>
+                </div>
+            </div>
+
+
+            <div class="board-list-header">
+                <div class="col-title">제목</div>
+                <div class="col-info">작성자 및 일자</div>
+            </div>
+
+            <div class="board-list" id="boardList">
+                <!-- Rows will be dynamically inserted here by JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2 class="footer-logo">게시판</h2>
+            </div>
+            <div class="footer-section">
+                <h3>Menu</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">포트폴리오</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h3>Contact</h3>
+                <p>Phone: <a href="tel:01063781081">010 6378 1081</a></p>
+                <p>Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kimseunghyun0916@gmail.com" target="_blank">kimseunghyun0916@gmail.com</a></p>
+                <p>Instagram: <a href="https://www.instagram.com/k_sxhx.4" target="_blank">@k_sxhx.4</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gangnam Hidden Place. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="scroll-controls">
+        <button id="scrollTop" title="Go to Top">↑</button>
+        <button id="scrollBottom" title="Go to Bottom">↓</button>
+    </div>
+
+    <!-- 글 작성 모달 팝업 -->
+    <div id="writeModal" class="portfolio-modal">
+        <div class="modal-content" style="max-width: 600px; padding: 40px;">
+            <span class="close-modal" id="closeWriteModal">&times;</span>
+            <div class="modal-body" style="text-align: left;">
+                <h3 style="font-size: 1.5rem; color: var(--text-color); margin-bottom: 25px;">새로운 글 작성</h3>
+                <form id="guestbookForm">
+                    <input type="hidden" id="editPostId" value="">
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <input type="text" id="gbName" placeholder="작성자 이름" required style="width: 100%; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; background: #fbfaf8; font-family: var(--font-sans);">
+                        </div>
+                        <div class="form-group half">
+                            <input type="password" id="gbPassword" placeholder="비밀번호" required style="width: 100%; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; background: #fbfaf8; font-family: var(--font-sans);">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <input type="text" id="gbTitle" placeholder="제목" required style="width: 100%; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; background: #fbfaf8; font-family: var(--font-sans);">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <textarea id="gbMessage" rows="4" placeholder="남기고 싶은 말을 적어주세요..." required style="width: 100%; padding: 15px; border: 1px solid rgba(0,0,0,0.1); border-radius: 8px; background: #fbfaf8; font-family: var(--font-sans);"></textarea>
+                    </div>
+                    <div class="form-actions" style="display: flex; gap: 15px; justify-content: flex-end;">
+                        <button type="button" id="cancelWriteBtn" class="cancel-btn">취소</button>
+                        <button type="submit" class="submit-btn">작성하기</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 방명록 모달 팝업 -->
+    <div id="guestbookModal" class="portfolio-modal">
+        <div class="modal-content" style="max-width: 600px; padding: 50px 40px 40px;">
+            <span class="close-modal" id="closeGuestbookModal">&times;</span>
+            <div class="modal-body">
+                <div class="modal-text">
+                    <h3 id="gbModalTitle" style="font-size: 1.6rem; margin-bottom: 10px; text-align: left; color: var(--text-color);">제목</h3>
+                    <div style="font-size: 0.85rem; color: #888; margin-bottom: 25px; text-align: left; border-bottom: 1px solid #eee; padding-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span id="gbModalAuthor" style="font-weight: 600; color: #333; margin-right: 15px;"></span>
+                            <span id="gbModalDate"></span>
+                        </div>
+                        <div>
+                            <button id="gbPinBtn" style="background: none; border: none; color: var(--accent-color); font-size: 0.8rem; cursor: pointer; text-decoration: underline; margin-right: 10px; font-weight: 600; display: none;">고정하기</button>
+                            <button id="gbEditBtn" style="background: none; border: none; color: #bfa07d; font-size: 0.8rem; cursor: pointer; text-decoration: underline; margin-right: 10px;">수정</button>
+                            <button id="gbDeleteBtn" style="background: none; border: none; color: #ff6b6b; font-size: 0.8rem; cursor: pointer; text-decoration: underline;">삭제</button>
+                        </div>
+                    </div>
+                    <p id="gbModalDesc" style="text-align: left; white-space: pre-wrap; color: #444; line-height: 1.8; font-size: 1rem; margin-bottom: 20px;">내용</p>
+                    
+                    <div style="display: flex; gap: 10px; margin-bottom: 30px; justify-content: flex-start;">
+                        <button id="modalLikeBtn" class="reaction-badge">👍 <span id="modalLikeCount">0</span></button>
+                        <button id="modalDislikeBtn" class="reaction-badge">👎 <span id="modalDislikeCount">0</span></button>
+                    </div>
+                    
+                    <div class="comments-section" style="border-top: 1px solid #eee; padding-top: 20px; text-align: left;">
+                        <h4 style="font-size: 1.1rem; color: var(--text-color); margin-bottom: 15px;">댓글 <span id="gbCommentCount" style="color: var(--accent-color);">0</span></h4>
+                        
+                        <div id="modalCommentsList" style="margin-bottom: 20px;">
+                            <!-- Comments go here -->
+                        </div>
+                        
+                        <form id="commentForm" style="display: flex; flex-direction: column; gap: 10px; background: #f9f9f9; padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="commentName" placeholder="이름" required style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-sans);">
+                                <input type="password" id="commentPassword" placeholder="비밀번호" required style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-sans);">
+                            </div>
+                            <div style="display: flex; gap: 10px;">
+                                <input type="text" id="commentText" placeholder="댓글을 남겨보세요..." required style="flex: 3; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: var(--font-sans);">
+                                <button type="submit" style="flex: 1; background: var(--text-color); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 600; font-family: var(--font-sans);">등록</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

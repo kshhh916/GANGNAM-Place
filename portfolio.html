@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | 강남의 숨겨진 보물들</title>
+    <meta name="description" content="포트폴리오 메인 페이지입니다.">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo"><a href="index.html" style="text-decoration:none; color:inherit;">GANGNAM HIDDEN PLACE</a></div>
+        <div class="header-right">
+            <nav class="top-nav-links">
+                <a href="index.html">Home</a>
+                <a href="portfolio.html">포트폴리오</a>
+                <a href="board.html">게시판</a>
+            </nav>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <div class="side-logo">GANGNAM<br>HIDDEN PLACE</div>
+            <span class="close-btn" id="closeBtn">&times;</span>
+        </div>
+        <nav class="side-nav-links">
+            <a href="index.html#yeoksam">01 역삼동</a>
+            <a href="index.html#nonhyeon">02 논현동</a>
+            <a href="index.html#sinsa">03 신사동</a>
+            <a href="index.html#samseong">04 삼성동</a>
+            <a href="index.html#apgujeong">05 압구정동</a>
+            <a href="index.html#cheongdam">06 청담동</a>
+        </nav>
+    </div>
+
+    <main>
+        <a href="index.html" class="back-home-btn">홈으로 돌아가기</a>
+
+        <!-- 포트폴리오 타이틀 영역 -->
+        <section class="board-header" style="padding-top: 100px; padding-bottom: 0;">
+            <div class="board-header-inner">
+                <span class="tagline reveal">나의 기록</span>
+                <h1 class="reveal" style="font-size: 3rem; margin-bottom: 5px;">포트폴리오</h1>
+                <p class="reveal">제가 경험하고 기록한 다양한 작업물들을 소개합니다.</p>
+            </div>
+        </section>
+
+        <!-- 포트폴리오 리스트 -->
+        <section id="portfolio-list" style="display: block; padding-top: 20px;">
+            <div id="portfolio-grid" style="width: 95%; max-width: 1700px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 0 20px;">
+                <!-- 포트폴리오 아이템 1 -->
+                <div class="card reveal" style="display: flex; flex-direction: column;">
+                    <div class="card-img-wrapper" style="display: flex; height: 280px;">
+                        <img src="portfolio_pic1.jpg" alt="Portfolio Image 1" style="width: 50%; object-fit: cover; border-right: 2px solid white;">
+                        <img src="portfolio_pic2.jpg" alt="Portfolio Image 2" style="width: 50%; object-fit: cover;">
+                    </div>
+                    <div class="card-info" style="text-align: center;">
+                        <span class="category-tag">웹 프로젝트</span>
+                        <h3>스물셋의 시선으로 담은 진짜 강남</h3>
+                        <p>23살 대학생이 발로 뛰어 찾아낸 강남 로컬 스팟 큐레이션 웹사이트입니다.</p>
+                        <a href="index.html" class="read-more">홈페이지 둘러보기</a>
+                    </div>
+                </div>
+
+                <!-- 포트폴리오 아이템 2 -->
+                <div class="card reveal" style="display: flex; flex-direction: column;">
+                    <div class="card-img-wrapper" style="display: flex; height: 280px;">
+                        <img src="portfolio_pic3.jpg" alt="Portfolio Image 3" style="width: 50%; object-fit: cover; border-right: 2px solid white;">
+                        <img src="portfolio_pic4.jpg" alt="Portfolio Image 4" style="width: 50%; object-fit: cover;">
+                    </div>
+                    <div class="card-info" style="text-align: center;">
+                        <span class="category-tag">학업 및 성장</span>
+                        <h3>로봇 전문가를 향한 첫걸음</h3>
+                        <p>인덕과학기술고등학교 졸업 후, 동양미래대학교 로봇공학과에 진학하여 실무 중심의 엔지니어로 성장 중입니다.</p>
+                        <a href="javascript:void(0)" class="read-more" onclick="openPortfolioModal('card2')">자세히 보기</a>
+                    </div>
+                </div>
+
+                <!-- 포트폴리오 아이템 3 -->
+                <div class="card reveal" style="display: flex; flex-direction: column;">
+                    <div class="card-img-wrapper" style="display: flex; height: 280px;">
+                        <img src="portfolio_pic5.jpg" alt="Portfolio Image 5" style="width: 50%; object-fit: cover; border-right: 2px solid white;">
+                        <img src="portfolio_pic6.jpg" alt="Portfolio Image 6" style="width: 50%; object-fit: cover;">
+                    </div>
+                    <div class="card-info" style="text-align: center;">
+                        <span class="category-tag">군 복무</span>
+                        <h3>한계에 도전한 시간, 28사단 수색대대</h3>
+                        <p>28사단 수색대대에서 무사히 복무를 마쳤습니다. 강인한 체력과 책임감을 바탕으로 복학 후 새로운 목표를 향해 나아갑니다.</p>
+                        <a href="javascript:void(0)" class="read-more" onclick="openPortfolioModal('card3')">자세히 보기</a>
+                    </div>
+                </div>
+
+                <!-- 포트폴리오 아이템 4 -->
+                <div class="card reveal" style="display: flex; flex-direction: column;">
+                    <div class="card-img-wrapper" style="display: flex; height: 280px;">
+                        <img src="portfolio_pic7.jpg" alt="Portfolio Image 7" style="width: 50%; object-fit: cover; border-right: 2px solid white;">
+                        <img src="portfolio_pic8.jpg" alt="Portfolio Image 8" style="width: 50%; object-fit: cover;">
+                    </div>
+                    <div class="card-info" style="text-align: center;">
+                        <span class="category-tag">일상과 사람들</span>
+                        <h3>에너지를 채우는 소중한 시간들</h3>
+                        <p>바쁜 일상 속에서도 소중한 친구들과 여가 시간을 보내며 얻는 긍정적인 에너지는 제 든든한 원동력입니다.</p>
+                        <a href="javascript:void(0)" class="read-more" onclick="openPortfolioModal('card4')">자세히 보기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h2 class="footer-logo">포트폴리오</h2>
+            </div>
+            <div class="footer-section">
+                <h3>Menu</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="board.html">게시판</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact-info">
+                <h3>Contact</h3>
+                <p>Phone: <a href="tel:01063781081">010 6378 1081</a></p>
+                <p>Email: <a href="https://mail.google.com/mail/?view=cm&fs=1&to=kimseunghyun0916@gmail.com" target="_blank">kimseunghyun0916@gmail.com</a></p>
+                <p>Instagram: <a href="https://www.instagram.com/k_sxhx.4" target="_blank">@k_sxhx.4</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gangnam Hidden Place. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="scroll-controls">
+        <button id="scrollTop" title="Go to Top">↑</button>
+        <button id="scrollBottom" title="Go to Bottom">↓</button>
+    </div>
+
+    <!-- 포트폴리오 모달 팝업 -->
+    <div id="portfolioModal" class="portfolio-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closePortfolioModal()">&times;</span>
+            <div class="modal-body">
+                <div class="modal-images">
+                    <img id="modalImg1" src="" alt="Portfolio Image 1">
+                    <img id="modalImg2" src="" alt="Portfolio Image 2">
+                </div>
+                <div class="modal-text">
+                    <h3 id="modalTitle">제목</h3>
+                    <p id="modalDesc">내용</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
