@@ -1,3 +1,16 @@
+const firebaseConfig = {
+  apiKey: "AIzaSyC0l0P9b87YrcXbJKgsUU1PpREFhbMLVBY",
+  authDomain: "portfolio-board-6df90.firebaseapp.com",
+  projectId: "portfolio-board-6df90",
+  storageBucket: "portfolio-board-6df90.firebasestorage.app",
+  messagingSenderId: "22683529596",
+  appId: "1:22683529596:web:3c41651cc1d47444a974f9",
+  measurementId: "G-3WV1D56PD1"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
 document.addEventListener('DOMContentLoaded', () => {
     const sideMenu = document.getElementById('sideMenu');
     const hamburger = document.getElementById('hamburger');
@@ -6,12 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const sections = document.querySelectorAll('section[id]');
 
     // Toggle Side Menu
-    hamburger.addEventListener('click', () => {
+    if(hamburger) hamburger.addEventListener('click', () => {
         sideMenu.classList.add('open');
         updateActiveLink(); // Update highlight as soon as menu opens
     });
 
-    closeBtn.addEventListener('click', () => {
+    if(closeBtn) closeBtn.addEventListener('click', () => {
         sideMenu.classList.remove('open');
     });
 
@@ -87,14 +100,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollTopBtn = document.getElementById('scrollTop');
     const scrollBottomBtn = document.getElementById('scrollBottom');
 
-    scrollTopBtn.addEventListener('click', () => {
+    if(scrollTopBtn) scrollTopBtn.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
 
-    scrollBottomBtn.addEventListener('click', () => {
+    if(scrollBottomBtn) scrollBottomBtn.addEventListener('click', () => {
         window.scrollTo({
             top: document.body.scrollHeight,
             behavior: 'smooth'
@@ -103,36 +116,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        if (sideMenu && hamburger && sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && !hamburger.contains(e.target)) {
             sideMenu.classList.remove('open');
         }
     });
 
     // Logo click to top and reset animations
     const logo = document.querySelector('.logo');
-    logo.style.cursor = 'pointer';
-    logo.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        
-        // Reset animations
-        const reveals = document.querySelectorAll('.reveal');
-        reveals.forEach(el => {
-            el.classList.remove('active');
-            revealObserver.unobserve(el); // Stop observing to reset
-        });
-        
-        // Use a small delay to allow the removal of 'active' to take effect
-        // and then re-observe to trigger IntersectionObserver's logic
-        setTimeout(() => {
-            reveals.forEach(el => {
-                revealObserver.observe(el); // Re-observe to trigger isIntersecting for visible elements
+    if(logo) {
+        logo.style.cursor = 'pointer';
+        logo.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-            updateActiveLink();
-        }, 100);
-    });
+            
+            // Reset animations
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                el.classList.remove('active');
+                revealObserver.unobserve(el); // Stop observing to reset
+            });
+            
+            setTimeout(() => {
+                reveals.forEach(el => {
+                    revealObserver.observe(el); // Re-observe to trigger isIntersecting for visible elements
+                });
+                updateActiveLink();
+            }, 100);
+        });
+    }
 
     // Initial check
     updateActiveLink();
@@ -144,6 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelWriteBtn = document.getElementById('cancelWriteBtn');
     const writeModal = document.getElementById('writeModal');
     let isAdmin = false;
+    let globalMessages = [];
 
     const getFormattedDate = () => {
         const now = new Date();
@@ -155,8 +169,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const seconds = String(now.getSeconds()).padStart(2, '0');
         const ampm = hours >= 12 ? '오후' : '오전';
         hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
+        hours = hours ? hours : 12; 
         return `${yyyy}. ${mm}. ${dd}. ${ampm} ${hours}:${minutes}:${seconds}`;
+    };
+
+    const escapeHTML = (str) => {
+        if(!str) return '';
+        return str.replace(/[&<>'"]/g, 
+            tag => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                "'": '&#39;',
+                '"': '&quot;'
+            }[tag])
+        );
     };
 
     if (guestbookForm && boardList) {
@@ -182,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+        
         // Toggle write form
         if (toggleWriteBtn && writeModal) {
             toggleWriteBtn.addEventListener('click', () => {
@@ -198,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Write Modal Close Logic (X and outside)
+        // Write Modal Close Logic
         const closeWriteModal = document.getElementById('closeWriteModal');
         if (closeWriteModal && writeModal) {
             closeWriteModal.addEventListener('click', () => {
@@ -222,7 +250,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 gbModal.classList.remove('show');
             });
             
-            // Close on outside click
             window.addEventListener('click', (event) => {
                 if (event.target === gbModal) {
                     gbModal.classList.remove('show');
@@ -233,13 +260,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Delete Logic
         const gbDeleteBtn = document.getElementById('gbDeleteBtn');
         if (gbDeleteBtn) {
-            gbDeleteBtn.addEventListener('click', () => {
+            gbDeleteBtn.addEventListener('click', async () => {
                 if (!gbModal) return;
                 const postId = gbModal.getAttribute('data-id');
                 if (!postId) return;
                 
-                const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                const msg = messages.find(m => m.id == postId);
+                const msg = globalMessages.find(m => m.id === postId);
                 
                 if (msg) {
                     let canDelete = isAdmin;
@@ -249,17 +275,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             return;
                         }
                         const password = prompt('게시글을 삭제하려면 비밀번호를 입력하세요:');
-                        if (password === null) return; // Cancelled
+                        if (password === null) return; 
                         
                         if (password === msg.password) canDelete = true;
                         else alert('비밀번호가 일치하지 않습니다.');
                     }
                     
                     if (canDelete) {
-                        const newMessages = messages.filter(m => m.id != postId);
-                        localStorage.setItem('ghp_messages', JSON.stringify(newMessages));
+                        await db.collection("guestbook").doc(postId).delete();
                         gbModal.classList.remove('show');
-                        loadMessages();
                         alert('게시글이 삭제되었습니다.');
                     }
                 }
@@ -269,48 +293,51 @@ document.addEventListener('DOMContentLoaded', () => {
         // Pin Logic
         const gbPinBtn = document.getElementById('gbPinBtn');
         if (gbPinBtn) {
-            gbPinBtn.addEventListener('click', () => {
+            gbPinBtn.addEventListener('click', async () => {
                 if (!isAdmin || !gbModal) return;
                 const postId = gbModal.getAttribute('data-id');
-                const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                const msg = messages.find(m => m.id == postId);
+                const msg = globalMessages.find(m => m.id === postId);
                 if (msg) {
-                    msg.isPinned = !msg.isPinned;
-                    localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                    loadMessages();
+                    await db.collection("guestbook").doc(postId).update({
+                        isPinned: !msg.isPinned
+                    });
                     gbModal.classList.remove('show');
                 }
             });
         }
         
         // Reaction Helper
-        const handleReaction = (item, type) => {
+        const handleReaction = async (item, type) => {
             const votes = JSON.parse(localStorage.getItem('ghp_votes')) || {};
             const prevVote = votes[item.id];
+            let newLikes = item.likes || 0;
+            let newDislikes = item.dislikes || 0;
             
             if (prevVote === type) {
-                // 동일한 버튼을 다시 누른 경우 -> 취소
                 delete votes[item.id];
-                if (type === 'like') item.likes = Math.max(0, (item.likes || 1) - 1);
-                else item.dislikes = Math.max(0, (item.dislikes || 1) - 1);
+                if (type === 'like') newLikes = Math.max(0, newLikes - 1);
+                else newDislikes = Math.max(0, newDislikes - 1);
             } else if (prevVote) {
-                // 다른 버튼으로 변경하는 경우
                 votes[item.id] = type;
                 if (type === 'like') {
-                    item.likes = (item.likes || 0) + 1;
-                    item.dislikes = Math.max(0, (item.dislikes || 1) - 1);
+                    newLikes++;
+                    newDislikes = Math.max(0, newDislikes - 1);
                 } else {
-                    item.dislikes = (item.dislikes || 0) + 1;
-                    item.likes = Math.max(0, (item.likes || 1) - 1);
+                    newDislikes++;
+                    newLikes = Math.max(0, newLikes - 1);
                 }
             } else {
-                // 새로운 평가인 경우
                 votes[item.id] = type;
-                if (type === 'like') item.likes = (item.likes || 0) + 1;
-                else item.dislikes = (item.dislikes || 0) + 1;
+                if (type === 'like') newLikes++;
+                else newDislikes++;
             }
             
             localStorage.setItem('ghp_votes', JSON.stringify(votes));
+            
+            await db.collection("guestbook").doc(item.id).update({
+                likes: newLikes,
+                dislikes: newDislikes
+            });
             return true;
         };
         
@@ -324,28 +351,18 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         
         if (modalLikeBtn) {
-            modalLikeBtn.addEventListener('click', () => {
+            modalLikeBtn.addEventListener('click', async () => {
                 const postId = gbModal.getAttribute('data-id');
-                const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                const msg = messages.find(m => m.id == postId);
-                if (msg && handleReaction(msg, 'like')) {
-                    localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                    updateModalReactions(msg);
-                    loadMessages(); // update list silently
-                }
+                const msg = globalMessages.find(m => m.id === postId);
+                if (msg) await handleReaction(msg, 'like');
             });
         }
         
         if (modalDislikeBtn) {
-            modalDislikeBtn.addEventListener('click', () => {
+            modalDislikeBtn.addEventListener('click', async () => {
                 const postId = gbModal.getAttribute('data-id');
-                const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                const msg = messages.find(m => m.id == postId);
-                if (msg && handleReaction(msg, 'dislike')) {
-                    localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                    updateModalReactions(msg);
-                    loadMessages();
-                }
+                const msg = globalMessages.find(m => m.id === postId);
+                if (msg) await handleReaction(msg, 'dislike');
             });
         }
 
@@ -357,8 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const postId = gbModal.getAttribute('data-id');
                 if (!postId) return;
                 
-                const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                const msg = messages.find(m => m.id == postId);
+                const msg = globalMessages.find(m => m.id === postId);
                 
                 if (msg) {
                     let canEdit = isAdmin;
@@ -389,8 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render Comments Logic
         const renderComments = (postId) => {
-            const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-            const msg = messages.find(m => m.id == postId);
+            const msg = globalMessages.find(m => m.id === postId);
             const commentsList = document.getElementById('modalCommentsList');
             const commentCount = document.getElementById('gbCommentCount');
             
@@ -407,7 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; color: #888;">
                         <div>
                             <span style="font-weight: 600; color: #444;">${escapeHTML(c.name)}</span>
-                            ${c.isAdmin ? `<span class="meta-admin-badge">관리자</span>` : ''}
+                            ${c.isAdmin ? '<span class="meta-admin-badge">관리자</span>' : ''}
                         </div>
                         <div style="display: flex; align-items: center;">
                             <span>${c.date}</span>
@@ -420,24 +435,55 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div style="font-size: 0.95rem; color: #333; line-height: 1.5;">${escapeHTML(c.text)}</div>
                 `;
                 
+                const handleCommentReaction = async (comment, type) => {
+                    const votes = JSON.parse(localStorage.getItem('ghp_votes')) || {};
+                    const voteId = postId + '_' + comment.id;
+                    const prevVote = votes[voteId];
+                    let newLikes = comment.likes || 0;
+                    let newDislikes = comment.dislikes || 0;
+                    
+                    if (prevVote === type) {
+                        delete votes[voteId];
+                        if (type === 'like') newLikes = Math.max(0, newLikes - 1);
+                        else newDislikes = Math.max(0, newDislikes - 1);
+                    } else if (prevVote) {
+                        votes[voteId] = type;
+                        if (type === 'like') {
+                            newLikes++;
+                            newDislikes = Math.max(0, newDislikes - 1);
+                        } else {
+                            newDislikes++;
+                            newLikes = Math.max(0, newLikes - 1);
+                        }
+                    } else {
+                        votes[voteId] = type;
+                        if (type === 'like') newLikes++;
+                        else newDislikes++;
+                    }
+                    localStorage.setItem('ghp_votes', JSON.stringify(votes));
+                    
+                    const newComments = comments.map(cm => {
+                        if(cm.id === comment.id) {
+                            return { ...cm, likes: newLikes, dislikes: newDislikes };
+                        }
+                        return cm;
+                    });
+                    
+                    await db.collection("guestbook").doc(postId).update({ comments: newComments });
+                };
+
                 // Comment Like
                 cItem.querySelector('.c-like-btn').addEventListener('click', () => {
-                    if (handleReaction(c, 'like')) {
-                        localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                        renderComments(postId);
-                    }
+                    handleCommentReaction(c, 'like');
                 });
                 
                 // Comment Dislike
                 cItem.querySelector('.c-dislike-btn').addEventListener('click', () => {
-                    if (handleReaction(c, 'dislike')) {
-                        localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                        renderComments(postId);
-                    }
+                    handleCommentReaction(c, 'dislike');
                 });
                 
                 // Comment Edit
-                cItem.querySelector('.c-edit-btn').addEventListener('click', () => {
+                cItem.querySelector('.c-edit-btn').addEventListener('click', async () => {
                     let canEdit = isAdmin;
                     if (!canEdit) {
                         const pwd = prompt('댓글을 수정하려면 비밀번호를 입력하세요:');
@@ -448,16 +494,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (canEdit) {
                         const newText = prompt('수정할 내용을 입력하세요:', c.text);
                         if (newText !== null && newText.trim() !== '') {
-                            c.text = newText.trim();
-                            localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                            renderComments(postId);
-                            loadMessages();
+                            const newComments = comments.map(cm => {
+                                if(cm.id === c.id) return { ...cm, text: newText.trim() };
+                                return cm;
+                            });
+                            await db.collection("guestbook").doc(postId).update({ comments: newComments });
                         }
                     }
                 });
                 
                 // Comment Delete
-                cItem.querySelector('.c-del-btn').addEventListener('click', () => {
+                cItem.querySelector('.c-del-btn').addEventListener('click', async () => {
                     let canDelete = isAdmin;
                     if (!canDelete) {
                         const pwd = prompt('댓글을 삭제하려면 비밀번호를 입력하세요:');
@@ -466,10 +513,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         else alert('비밀번호가 일치하지 않습니다.');
                     }
                     if (canDelete) {
-                        msg.comments = msg.comments.filter(cm => cm.id !== c.id);
-                        localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                        renderComments(postId);
-                        loadMessages();
+                        const newComments = comments.filter(cm => cm.id !== c.id);
+                        await db.collection("guestbook").doc(postId).update({ comments: newComments });
                     }
                 });
                 
@@ -480,7 +525,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Comment Form Submit
         const commentForm = document.getElementById('commentForm');
         if (commentForm) {
-            commentForm.addEventListener('submit', (e) => {
+            commentForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const gbModal = document.getElementById('guestbookModal');
                 const postId = gbModal ? gbModal.getAttribute('data-id') : null;
@@ -491,15 +536,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const cText = document.getElementById('commentText').value.trim();
                 
                 if (cName && cPassword && cText) {
-                    const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                    const msgIndex = messages.findIndex(m => m.id == postId);
-                    
-                    if (msgIndex !== -1) {
-                        if (!messages[msgIndex].comments) messages[msgIndex].comments = [];
+                    const msg = globalMessages.find(m => m.id === postId);
+                    if (msg) {
                         const dateStr = getFormattedDate();
-                        
-                        messages[msgIndex].comments.push({
-                            id: Date.now(),
+                        const newComment = {
+                            id: Date.now().toString(),
                             name: cName,
                             password: cPassword,
                             text: cText,
@@ -507,53 +548,29 @@ document.addEventListener('DOMContentLoaded', () => {
                             likes: 0,
                             dislikes: 0,
                             isAdmin: isAdmin
-                        });
-                        
-                        localStorage.setItem('ghp_messages', JSON.stringify(messages));
+                        };
+                        const newComments = [...(msg.comments || []), newComment];
+                        await db.collection("guestbook").doc(postId).update({ comments: newComments });
                         commentForm.reset();
-                        renderComments(postId);
-                        loadMessages();
                     }
                 }
             });
         }
 
-        // Load messages from LocalStorage
-        const loadMessages = () => {
-            let messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-            let needsSave = false;
-            
-            // Data Migration: Ensure all old messages and comments have IDs
-            messages.forEach((msg, index) => {
-                if (!msg.id) {
-                    msg.id = Date.now() - (100000 - index); // Give old posts sequential past timestamps
-                    needsSave = true;
-                }
-                if (msg.comments) {
-                    msg.comments.forEach((c, cIdx) => {
-                        if (!c.id) {
-                            c.id = Date.now() - (50000 - cIdx);
-                            needsSave = true;
-                        }
-                    });
-                }
-            });
-            if (needsSave) {
-                localStorage.setItem('ghp_messages', JSON.stringify(messages));
-            }
-            
+        // Render the board
+        const renderBoard = (messages) => {
             boardList.innerHTML = '';
-            
             const boardCount = document.getElementById('boardCount');
             if (boardCount) {
                 boardCount.textContent = messages.length;
             }
             
+            // Sort by pinned then by date (createdAt desc)
             messages.sort((a, b) => {
                 const aPinned = Boolean(a.isPinned);
                 const bPinned = Boolean(b.isPinned);
                 if (aPinned !== bPinned) return bPinned ? 1 : -1;
-                return b.id - a.id;
+                return (b.createdAt || 0) - (a.createdAt || 0);
             });
             
             messages.forEach((msg) => {
@@ -561,12 +578,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const pinnedClass = msg.isPinned ? ' pinned-post' : '';
                 item.className = 'board-list-item reveal active' + pinnedClass;
                 
-                // Fallback for old messages without a title
                 const displayTitle = msg.title ? escapeHTML(msg.title) : escapeHTML(msg.content.substring(0, 30)) + (msg.content.length > 30 ? '...' : '');
                 const cCount = msg.comments ? msg.comments.length : 0;
                 
-                const pinnedLabel = msg.isPinned ? `<span class="pinned-label">📌 고정된 게시글</span>` : '';
-                const adminBadge = msg.isAdmin ? `<span class="meta-admin-badge">관리자</span>` : '';
+                const pinnedLabel = msg.isPinned ? '<span class="pinned-label">📌 고정된 게시글</span>' : '';
+                const adminBadge = msg.isAdmin ? '<span class="meta-admin-badge">관리자</span>' : '';
                 
                 item.innerHTML = `
                     <div class="item-main">
@@ -586,28 +602,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
                 
-                // Click on like in list view
                 const likeBtn = item.querySelector('.list-like-btn');
                 if (likeBtn) {
-                    likeBtn.addEventListener('click', (e) => {
+                    likeBtn.addEventListener('click', async (e) => {
                         e.stopPropagation();
-                        if (handleReaction(msg, 'like')) {
-                            localStorage.setItem('ghp_messages', JSON.stringify(messages));
-                            loadMessages();
-                        }
+                        await handleReaction(msg, 'like');
                     });
                 }
                 
-                // Click on comment btn in list view (just opens modal)
                 const commentListBtn = item.querySelector('.comment-btn');
                 if (commentListBtn) {
                     commentListBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        item.click(); // trigger modal
+                        item.click();
                     });
                 }
                 
-                // Show modal on click
                 item.addEventListener('click', () => {
                     const gbModal = document.getElementById('guestbookModal');
                     if (gbModal) {
@@ -633,24 +643,34 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Escape HTML to prevent XSS
-        const escapeHTML = (str) => {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    "'": '&#39;',
-                    '"': '&quot;'
-                }[tag])
-            );
-        };
-
-        // Initial Load
-        loadMessages();
+        // Firebase Realtime Listener
+        db.collection("guestbook").onSnapshot((snapshot) => {
+            const messages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            globalMessages = messages;
+            renderBoard(messages);
+            
+            // Update open modal if exists
+            if (gbModal && gbModal.classList.contains('show')) {
+                const currentPostId = gbModal.getAttribute('data-id');
+                const currentMsg = messages.find(m => m.id === currentPostId);
+                if (currentMsg) {
+                    updateModalReactions(currentMsg);
+                    renderComments(currentPostId);
+                    
+                    const displayTitle = currentMsg.title ? escapeHTML(currentMsg.title) : escapeHTML(currentMsg.content.substring(0, 30)) + (currentMsg.content.length > 30 ? '...' : '');
+                    document.getElementById('gbModalTitle').textContent = displayTitle;
+                    document.getElementById('gbModalAuthor').textContent = currentMsg.name;
+                    document.getElementById('gbModalDate').textContent = currentMsg.date;
+                    document.getElementById('gbModalDesc').textContent = currentMsg.content;
+                    if(gbPinBtn) gbPinBtn.textContent = currentMsg.isPinned ? '고정 해제' : '고정하기';
+                } else {
+                    gbModal.classList.remove('show');
+                }
+            }
+        });
 
         // Handle Post form submission (Create / Edit)
-        guestbookForm.addEventListener('submit', (e) => {
+        guestbookForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const editId = document.getElementById('editPostId').value;
             const nameInput = document.getElementById('gbName').value.trim();
@@ -659,29 +679,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const messageInput = document.getElementById('gbMessage').value.trim();
 
             if (nameInput && passwordInput && titleInput && messageInput) {
-                const messages = JSON.parse(localStorage.getItem('ghp_messages')) || [];
-                
                 if (editId) {
                     // Editing existing post
-                    const msgIndex = messages.findIndex(m => m.id == editId);
-                    if (msgIndex !== -1) {
-                        messages[msgIndex].name = nameInput;
-                        messages[msgIndex].password = passwordInput;
-                        messages[msgIndex].title = titleInput;
-                        messages[msgIndex].content = messageInput;
-                        // Keep original date and comments
-                    }
+                    await db.collection("guestbook").doc(editId).update({
+                        name: nameInput,
+                        password: passwordInput,
+                        title: titleInput,
+                        content: messageInput
+                    });
                 } else {
                     // Creating new post
                     const dateStr = getFormattedDate();
-                    
-                    messages.push({
-                        id: Date.now(),
+                    await db.collection("guestbook").add({
                         name: nameInput,
                         password: passwordInput,
                         title: titleInput,
                         content: messageInput,
                         date: dateStr,
+                        createdAt: Date.now(),
                         comments: [],
                         likes: 0,
                         dislikes: 0,
@@ -689,14 +704,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         isAdmin: isAdmin
                     });
                 }
-
-                localStorage.setItem('ghp_messages', JSON.stringify(messages));
                 guestbookForm.reset();
                 document.getElementById('editPostId').value = '';
-                if (writeModal) {
-                    writeModal.classList.remove('show');
-                }
-                loadMessages();
+                if (writeModal) writeModal.classList.remove('show');
             }
         });
     }
@@ -735,6 +745,7 @@ function openPortfolioModal(cardId) {
         modal.classList.add('show');
     }
 }
+window.openPortfolioModal = openPortfolioModal;
 
 function closePortfolioModal() {
     const modal = document.getElementById('portfolioModal');
@@ -742,8 +753,8 @@ function closePortfolioModal() {
         modal.classList.remove('show');
     }
 }
+window.closePortfolioModal = closePortfolioModal;
 
-// 모달 바깥 영역 클릭 시 닫기
 window.addEventListener('click', function(event) {
     const modal = document.getElementById('portfolioModal');
     if (event.target === modal) {
@@ -758,11 +769,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (introModal && introConfirmBtn) {
         if (!sessionStorage.getItem('introSeen')) {
-            // Show modal and prevent scrolling, wait for click to animate
             introModal.style.display = 'flex';
             document.body.classList.add('no-scroll');
         } else {
-            // Already seen, start animation immediately
             if (window.startRevealAnimation) window.startRevealAnimation();
         }
 
@@ -770,11 +779,9 @@ document.addEventListener('DOMContentLoaded', () => {
             introModal.style.display = 'none';
             document.body.classList.remove('no-scroll');
             sessionStorage.setItem('introSeen', 'true');
-            // Trigger the reveal animation now!
             if (window.startRevealAnimation) window.startRevealAnimation();
         });
     } else {
-        // Not on index.html (no modal), start immediately
         if (window.startRevealAnimation) window.startRevealAnimation();
     }
 });

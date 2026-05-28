@@ -53,7 +53,7 @@
 
         <!-- 포트폴리오 리스트 -->
         <section id="portfolio-list" style="display: block; padding-top: 20px;">
-            <div id="portfolio-grid" style="width: 95%; max-width: 1700px; margin: 0 auto; padding: 0 20px;">
+            <div id="portfolio-grid" style="width: 95%; max-width: 1700px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 0 20px;">
                 <!-- 포트폴리오 아이템 1 -->
                 <div class="card reveal" style="display: flex; flex-direction: column;">
                     <div class="card-img-wrapper" style="display: flex; height: 280px;">
@@ -159,6 +159,8 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
